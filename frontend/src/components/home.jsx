@@ -1,11 +1,13 @@
 import React from "react";
+import Nav from "./Nav";
 
-const home = () => {
+const Home = () => {
   return (
     <div>
-      <p>home</p>
+      <Nav />
+      <p className="text-4xl">Hello!</p>
     </div>
   );
 };
 
-export default home;
+export default Home;
