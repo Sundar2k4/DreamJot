@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const Dream = require('./models/dream.js');
+const bcrypt = require('bcrypt');
+const Login = require('./models/login.js');
 const cors = require('cors');
 require("dotenv").config();
 const app = express();
@@ -37,6 +39,31 @@ app.post('/adddream', async (req, res) => {
     }
   });
   
+
+  app.post('/register',async (req,res)=>{
+      try{
+           const {name,password} = req.body;
+
+           const existing = await Login.findOne({name});
+
+           if(existing)
+           {
+             return res.status(400).json("error user already exists");
+           }
+
+           const newlogin = new Login({
+             name,
+             password,
+           })
+
+           await newlogin.save();
+           res.status(200).json("created successfully");
+
+      }catch(err)
+      {
+         res.status(400).json(err);
+      }
+  })
 
 app.listen(port, () => {
     console.log("server connected on port " + port);
