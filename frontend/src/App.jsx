@@ -8,6 +8,7 @@ import {
 import Home from "./components/home";
 import DreamForm from "./components/DreamForm";
 import Register from "./components/Register";
+import Login from "./components/Login";
 const App = () => {
   return (
     <Router>
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/dream" element={<DreamForm />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

@@ -4,6 +4,7 @@ const Dream = require('./models/dream.js');
 const bcrypt = require('bcrypt');
 const Login = require('./models/login.js');
 const cors = require('cors');
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const app = express();
 app.use(cors());
@@ -15,6 +16,34 @@ mongoose.connect(process.env.MONGOURI,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
 }).then(()=>{console.log("connected")}).catch(err=>console.log(err));
+
+const authenticate = async (req,res,next)=>{
+    try{
+          const authheader = req.get("authorization");
+          if(!authheader || !authheader.startsWith("Bearer "));
+          {
+             res.status(401).json({error:"authorization header is missing or invalid"});
+          }
+
+            
+
+
+
+
+
+    }catch(err)
+    {
+      console.error('Authentication error:', err);
+      if (err.name === 'JsonWebTokenError') {
+          return res.status(401).json({ error: 'Invalid token' });
+      }
+      if (err.name === 'TokenExpiredError') {
+          return res.status(401).json({ error: 'Token expired' });
+      }
+      res.status(401).json({ error: 'Authentication failed' });
+    }
+}
+
 
 app.post('/adddream', async (req, res) => {
     try {
@@ -64,6 +93,41 @@ app.post('/adddream', async (req, res) => {
          res.status(400).json(err);
       }
   })
+
+
+  app.post("/login", async (req,res)=>{
+          try{
+
+             const {name,password} = req.body;
+
+             const user = await Login.findOne({name});
+
+             if(!user)
+             {
+               return res.status(401).json("user not found");
+             }
+
+             const isuser = await bcrypt.compare(password,user.password);
+             if(isuser)
+             {
+                return res.status(400).json(
+                  "invalid credentials"
+                )
+             }
+
+             const token = jwt.sign(
+               {id:user._id},
+               process.env.JWT_SECRET,
+               {expiresIn:"1d"},
+             );
+
+             res.status(200).json(token);
+
+          }catch(err)
+          {
+            return res.status(400).json(err);
+          }
+  });
 
 app.listen(port, () => {
     console.log("server connected on port " + port);

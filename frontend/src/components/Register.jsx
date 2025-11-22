@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Nav from "./Nav";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { name, password };
-    fetch("http://localhost:5000/register", {
+    fetch("http://localhost:5000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,55 +20,58 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-black via-gray-800 to-white flex justify-center items-center p-6">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white/10 backdrop-blur-xl shadow-xl rounded-2xl p-8 border border-white/20"
-      >
-        <h2 className="text-3xl font-bold text-white mb-6 text-center drop-shadow">
-          Register 🔐
-        </h2>
-
-        <label className="text-white font-semibold">Username</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          className="w-full mt-1 mb-4 p-3 rounded-lg bg-white/20 text-white border border-white/30 
-          focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/30"
-        />
-
-        <label className="text-white font-semibold">Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full mt-1 mb-4 p-3 rounded-lg bg-white/20 text-white border border-white/30 
-          focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/30"
-        />
-
-        <button
-          type="submit"
-          className="w-full mt-4 bg-white text-black font-bold py-3 rounded-lg 
-          hover:bg-gray-200 hover:scale-[1.02] transition-all shadow-lg"
+    <div className="">
+      <Nav />
+      <div className="min-h-screen bg-gradient-to-r from-black via-gray-800 to-white flex justify-center items-center p-6">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md bg-white/10 backdrop-blur-xl shadow-xl rounded-2xl p-8 border border-white/20"
         >
-          Register
-        </button>
+          <h2 className="text-3xl font-bold text-white mb-6 text-center drop-shadow">
+            Register 🔐
+          </h2>
 
-        <p className="text-center text-gray-200 mt-4 text-sm">
-          Already Registered?{" "}
-          <span
-            className="text-white underline cursor-pointer"
-            onClick={() => {
-              navigate("/login");
-            }}
+          <label className="text-white font-semibold">Username</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="w-full mt-1 mb-4 p-3 rounded-lg bg-white/20 text-white border border-white/30 
+          focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/30"
+          />
+
+          <label className="text-white font-semibold">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full mt-1 mb-4 p-3 rounded-lg bg-white/20 text-white border border-white/30 
+          focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/30"
+          />
+
+          <button
+            type="submit"
+            className="w-full mt-4 bg-white text-black font-bold py-3 rounded-lg 
+          hover:bg-gray-200 hover:scale-[1.02] transition-all shadow-lg"
           >
-            Login
-          </span>
-        </p>
-      </form>
+            Register
+          </button>
+
+          <p className="text-center text-gray-200 mt-4 text-sm">
+            Already Registered?{" "}
+            <span
+              className="text-white underline cursor-pointer"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </span>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };
