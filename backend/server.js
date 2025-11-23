@@ -25,13 +25,17 @@ const authenticate = async (req,res,next)=>{
              res.status(401).json({error:"authorization header is missing or invalid"});
           }
 
-            
-
-
-
-
-
-    }catch(err)
+           const token = authheader.replace("Bearer","");
+           const decoded = jwt.verify(token,process.env.JWT_SECRET);
+           
+           const user = await Login.findById(decoded.id);
+           if (!user) {
+            return res.status(401).json({ error: 'User not found' });
+        }
+        
+        req.user = user;
+        next();
+      }catch(err)
     {
       console.error('Authentication error:', err);
       if (err.name === 'JsonWebTokenError') {
@@ -108,7 +112,7 @@ app.post('/adddream', async (req, res) => {
              }
 
              const isuser = await bcrypt.compare(password,user.password);
-             if(isuser)
+             if(!isuser)
              {
                 return res.status(400).json(
                   "invalid credentials"

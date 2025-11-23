@@ -10,13 +10,17 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { name, password };
-    fetch("http://localhost:5000/login", {
+    fetch("http://localhost:5000/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then(() => {
+        navigate("/login");
+      });
   };
 
   return (
