@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Nav from "./Nav";
+import { useNavigate } from "react-router-dom";
 
 const DreamForm = () => {
+  const navigate = useNavigate();
   const today = new Date().toISOString().split("T")[0];
   const [date, setDate] = useState(today);
   const [type, setType] = useState("");
@@ -20,6 +22,9 @@ const DreamForm = () => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
+      .then(() => {
+        navigate("/");
+      })
       .then((result) => console.log("Success:", result))
       .catch((error) => console.error("Error:", error));
   };
