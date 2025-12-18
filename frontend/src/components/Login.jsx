@@ -9,19 +9,27 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { name, password };
-    fetch("http://localhost:5000/Login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((res) => res.json());
 
-    if (data.ok) {
+    try {
+      const res = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, password }),
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error("Login failed:", errText);
+        return;
+      }
+
       const token = await res.json();
       localStorage.setItem("token", token);
       navigate("/");
+    } catch (err) {
+      console.error("Network/login error:", err);
     }
   };
 

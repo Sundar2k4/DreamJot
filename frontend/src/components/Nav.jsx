@@ -1,10 +1,12 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Nav = () => {
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const navigate = useNavigate();
+
   const label = token ? "Logout" : "Register";
+
   const handleAuthClick = () => {
     if (token) {
       localStorage.removeItem("token");
@@ -14,15 +16,13 @@ const Nav = () => {
       navigate("/register");
     }
   };
-  const navigate = useNavigate();
+
   return (
     <nav className="bg-gradient-to-r from-black via-gray-800 to-white shadow-lg px-8 py-4">
       <div className="flex items-center justify-between">
         <h1
           className="text-white text-3xl font-bold tracking-wide drop-shadow hover:cursor-pointer"
-          onClick={() => {
-            navigate("/");
-          }}
+          onClick={() => navigate("/")}
         >
           DreamJot
         </h1>
@@ -72,11 +72,10 @@ const Nav = () => {
               Contact
             </NavLink>
           </li>
+
           <button
             className="bg-black text-white rounded-xl p-2 hover:cursor-pointer hover:bg-white hover:text-black"
-            onClick={() => {
-              handleAuthClick;
-            }}
+            onClick={handleAuthClick}
           >
             {label}
           </button>
