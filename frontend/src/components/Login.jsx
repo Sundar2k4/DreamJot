@@ -17,6 +17,12 @@ const Login = () => {
       },
       body: JSON.stringify(data),
     }).then((res) => res.json());
+
+    if (data.ok) {
+      const token = await res.json();
+      localStorage.setItem("token", token);
+      navigate("/");
+    }
   };
 
   return (

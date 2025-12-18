@@ -17,36 +17,38 @@ mongoose.connect(process.env.MONGOURI,{
     useUnifiedTopology:true,
 }).then(()=>{console.log("connected")}).catch(err=>console.log(err));
 
-const authenticate = async (req,res,next)=>{
-    try{
-          const authheader = req.get("authorization");
-          if(!authheader || !authheader.startsWith("Bearer "));
-          {
-             res.status(401).json({error:"authorization header is missing or invalid"});
-          }
+const authenticate = async (req, res, next) => {
+  try {
+    const authheader = req.get("authorization"); // "Bearer <token>"
 
-           const token = authheader.replace("Bearer","");
-           const decoded = jwt.verify(token,process.env.JWT_SECRET);
-           
-           const user = await Login.findById(decoded.id);
-           if (!user) {
-            return res.status(401).json({ error: 'User not found' });
-        }
-        
-        req.user = user;
-        next();
-      }catch(err)
-    {
-      console.error('Authentication error:', err);
-      if (err.name === 'JsonWebTokenError') {
-          return res.status(401).json({ error: 'Invalid token' });
-      }
-      if (err.name === 'TokenExpiredError') {
-          return res.status(401).json({ error: 'Token expired' });
-      }
-      res.status(401).json({ error: 'Authentication failed' });
+    if (!authheader || !authheader.startsWith("Bearer ")) { // no semicolon
+      return res
+        .status(401)
+        .json({ error: "authorization header is missing or invalid" });
     }
-}
+
+    const token = authheader.split(" ")[1]; // get actual token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await Login.findById(decoded.id);
+    if (!user) {
+      return res.status(401).json({ error: "User not found" });
+    }
+
+    req.user = user;
+    next();
+  } catch (err) {
+    console.error("Authentication error:", err);
+    if (err.name === "JsonWebTokenError") {
+      return res.status(401).json({ error: "Invalid token" });
+    }
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).json({ error: "Token expired" });
+    }
+    res.status(401).json({ error: "Authentication failed" });
+  }
+};
+
 
 
 app.post('/adddream', async (req, res) => {

@@ -3,6 +3,17 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
+  const token = localStorage.getItem("token");
+  const label = token ? "Logout" : "Register";
+  const handleAuthClick = () => {
+    if (token) {
+      localStorage.removeItem("token");
+      setToken(null);
+      navigate("/");
+    } else {
+      navigate("/register");
+    }
+  };
   const navigate = useNavigate();
   return (
     <nav className="bg-gradient-to-r from-black via-gray-800 to-white shadow-lg px-8 py-4">
@@ -61,6 +72,14 @@ const Nav = () => {
               Contact
             </NavLink>
           </li>
+          <button
+            className="bg-black text-white rounded-xl p-2 hover:cursor-pointer hover:bg-white hover:text-black"
+            onClick={() => {
+              handleAuthClick;
+            }}
+          >
+            {label}
+          </button>
         </ul>
       </div>
     </nav>
