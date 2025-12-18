@@ -19,15 +19,15 @@ mongoose.connect(process.env.MONGOURI,{
 
 const authenticate = async (req, res, next) => {
   try {
-    const authheader = req.get("authorization"); // "Bearer <token>"
+    const authheader = req.get("authorization"); 
 
-    if (!authheader || !authheader.startsWith("Bearer ")) { // no semicolon
+    if (!authheader || !authheader.startsWith("Bearer ")) { 
       return res
         .status(401)
         .json({ error: "authorization header is missing or invalid" });
     }
 
-    const token = authheader.split(" ")[1]; // get actual token
+    const token = authheader.split(" ")[1]; 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await Login.findById(decoded.id);
@@ -51,7 +51,7 @@ const authenticate = async (req, res, next) => {
 
 
 
-app.post('/adddream', async (req, res) => {
+app.post('/adddream',authenticate, async (req, res) => {
     try {
       const { date, type, dream, characters } = req.body;
   

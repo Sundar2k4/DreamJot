@@ -15,10 +15,15 @@ const DreamForm = () => {
 
     const charactersarr = characters.split(",").map((c) => c.trim());
     const data = { date, type, characters: charactersarr, dream };
+    const token = localStorage.getItem("token");
 
     fetch("http://localhost:5000/adddream", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
