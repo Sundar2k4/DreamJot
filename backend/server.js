@@ -74,6 +74,18 @@ app.post('/adddream',authenticate, async (req, res) => {
       res.status(400).json(err);
     }
   });
+
+  app.get("/finddreams",authenticate,async(req,res)=>{
+    try
+    {
+    const data = await Dream.find({userId:req.user._id});
+    res.status(200).json(data);
+  }catch(err)
+  {
+    res.status(400).json(err);
+  }
+    
+  });
   
 
   app.post('/register',async (req,res)=>{
