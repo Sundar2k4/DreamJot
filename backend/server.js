@@ -56,6 +56,7 @@ app.post('/adddream',authenticate, async (req, res) => {
       const { date, type, dream, characters } = req.body;
   
       const newDream = new Dream({
+        userId:req.user._id,
         date,
         dream,
         type,
