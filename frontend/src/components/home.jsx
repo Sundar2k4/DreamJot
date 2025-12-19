@@ -30,16 +30,16 @@ const Home = () => {
       <div className="min-h-screen bg-gradient-to-r from-black via-gray-800 to-white p-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow">
-            Your Dreams ✨
+            Your Dreams
           </h2>
 
           {data.length !== 0 ? (
-            <div className="bg-white/10 backdrop-blur-xl shadow-xl rounded-2xl p-8 border border-white/20">
+            <div className="p-8">
               <ul className="space-y-4">
                 {data.map((dream) => (
                   <li
                     key={dream._id}
-                    className="p-6 bg-white/20 rounded-xl border border-white/30 hover:bg-white/30 transition-all hover:scale-[1.02] shadow-lg"
+                    className="p-6 bg-white/20 rounded-xl border hover:bg-white/30 transition-all hover:scale-[1.02] shadow-lg border-white"
                   >
                     <div className="text-white font-semibold text-lg mb-2">
                       {new Date(dream.date).toLocaleDateString()}
