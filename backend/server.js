@@ -111,9 +111,22 @@ app.post('/adddream',authenticate, async (req, res) => {
       {
          res.status(400).json(err);
       }
-  })
+  });
 
 
+  app.post("/deletedream", authenticate, async (req, res) => {
+    try {
+      const { id } = req.body;         
+      const val = await Dream.findByIdAndDelete(id);
+      if (!val) {
+        return res.status(404).json({ error: "Dream not found" });
+      }
+      res.status(200).json(val);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
+  
   app.post("/login", async (req,res)=>{
           try{
 
