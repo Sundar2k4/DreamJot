@@ -9,6 +9,7 @@ import Home from "./components/home";
 import DreamForm from "./components/DreamForm";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import DreamInfo from "./components/DreamInfo";
 const App = () => {
   return (
     <Router>
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/dream" element={<DreamForm />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dinfo" element={<DreamInfo />} />
       </Routes>
     </Router>
   );

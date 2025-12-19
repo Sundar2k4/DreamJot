@@ -93,7 +93,7 @@ const DreamForm = () => {
             className="w-full mt-4 bg-white text-black font-bold py-3 rounded-lg 
           hover:bg-gray-200 hover:scale-[1.02] transition-all shadow-lg cursor-pointer"
           >
-            Submit Dream
+            Save Dream
           </button>
         </form>
       </div>
