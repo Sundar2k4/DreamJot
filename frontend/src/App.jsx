@@ -10,6 +10,7 @@ import DreamForm from "./components/DreamForm";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import DreamInfo from "./components/DreamInfo";
+import PublicDreams from "./components/PublicDreams";
 const App = () => {
   return (
     <Router>
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dinfo" element={<DreamInfo />} />
+        <Route path="/pub" element={<PublicDreams />} />
       </Routes>
     </Router>
   );
