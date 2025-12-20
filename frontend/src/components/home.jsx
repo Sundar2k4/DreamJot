@@ -62,7 +62,7 @@ const Home = () => {
                     key={dream._id}
                     className="p-6 bg-white/20 rounded-xl border hover:bg-white/30 transition-all hover:scale-[1.02] shadow-lg border-white"
                     onClick={() => {
-                      navigate("/dinfo", { state: { id: dream._id } }); //sending id as props
+                      navigate("/dinfo", { state: { id: dream._id } }); //sending _id as props
                     }}
                   >
                     <div className="flex justify-between items-center text-white font-semibold text-lg mb-2">

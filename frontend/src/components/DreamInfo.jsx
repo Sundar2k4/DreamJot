@@ -1,44 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"; // prop handling
 
 const DreamInfo = () => {
   const location = useLocation();
   const { id } = location.state || {};
   const token = localStorage.getItem("token");
-  const [data, setData] = useState([]);
+  const [dream, setDream] = useState(null);
 
   console.log(id);
 
   const currdream = async () => {
-    const res = await fetch("http://localhost:5000/cdream", {
-      method: "GET",
+    const res = await fetch(`http://localhost:5000/cdream/${id}`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ id }),
     });
 
     if (res.ok) {
       const json = await res.json();
-      setData(json);
+      setDream(json);
       console.log("dream fetched successfully");
     }
   };
 
+  useEffect(() => {
+    currdream();
+  }, []);
+
   return (
     <div>
       <p>dreaminfo</p>
-
-      <button onClick={currdream}>Load dream</button>
-
-      {data.length > 0 && (
+      {dream && (
         <div>
-          <ul>
-            {data.map((dream) => (
-              <li key={dream._id}>{dream.type}</li>
-            ))}
-          </ul>
+          <p>Type: {dream.type}</p>
+          <p>Description: {dream.dream}</p>
+          <p>Date: {dream.date}</p>
+          <p>characters: {dream.characters}</p>
         </div>
       )}
     </div>

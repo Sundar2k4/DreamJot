@@ -113,6 +113,19 @@ app.post('/adddream',authenticate, async (req, res) => {
       }
   });
 
+  app.get("/cdream/:id", authenticate, async (req, res) => {
+    try {
+      const dream = await Dream.findOne({
+        _id: req.params.id,
+        userId: req.user._id,
+      });
+  
+      res.status(200).json(dream);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
+  
 
   app.post("/deletedream", authenticate, async (req, res) => {
     try {
