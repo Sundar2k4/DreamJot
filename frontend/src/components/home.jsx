@@ -49,12 +49,7 @@ const Home = () => {
     <div>
       <Nav />
       <div className="min-h-screen bg-gradient-to-r from-black via-gray-800 to-white p-6">
-        <div
-          className="max-w-4xl mx-auto hover:cursor-pointer"
-          onClick={() => {
-            navigate("/dinfo");
-          }}
-        >
+        <div className="max-w-4xl mx-auto hover:cursor-pointer">
           <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow">
             Your Dreams
           </h2>
@@ -66,6 +61,9 @@ const Home = () => {
                   <li
                     key={dream._id}
                     className="p-6 bg-white/20 rounded-xl border hover:bg-white/30 transition-all hover:scale-[1.02] shadow-lg border-white"
+                    onClick={() => {
+                      navigate("/dinfo", { state: { id: dream._id } }); //sending id as props
+                    }}
                   >
                     <div className="flex justify-between items-center text-white font-semibold text-lg mb-2">
                       <span>{new Date(dream.date).toLocaleDateString()}</span>
