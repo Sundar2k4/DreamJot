@@ -175,6 +175,16 @@ app.post('/adddream',authenticate, async (req, res) => {
           }
   });
 
+  app.get("/getname",authenticate, async (req,res)=>{
+     try{
+      return res.status(400).json({name:req.user.name});
+
+
+     }catch(err){
+      res.status(400).json(err);
+     }
+  })
+
 app.listen(port, () => {
     console.log("server connected on port " + port);
 });

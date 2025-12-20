@@ -4,6 +4,7 @@ import Nav from "./Nav";
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [name, setName] = useState("");
   const navigate = useNavigate();
 
   const handledelete = async (id) => {
@@ -24,6 +25,21 @@ const Home = () => {
       alert("an error occured");
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    fetch("http://localhost:5000/getname/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setName(data.name);
+      });
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -51,7 +67,11 @@ const Home = () => {
       <div className="min-h-screen bg-gradient-to-r from-black via-gray-800 to-white p-6">
         <div className="max-w-4xl mx-auto hover:cursor-pointer">
           <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow">
-            Your Dreams
+            <h1 className="text-3xl font-bold text-white mb-8 text-center drop-shadow">
+              {" "}
+              Welcome {name}👋{" "}
+            </h1>
+            Your Dreams:
           </h2>
 
           {data.length !== 0 ? (
