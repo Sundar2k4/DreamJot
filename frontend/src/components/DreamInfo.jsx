@@ -34,6 +34,7 @@ const DreamInfo = () => {
         <div>
           <p>Type: {dream.type}</p>
           <p>Description: {dream.dream}</p>
+          <p>Dream:{dream.scenario}</p>
           <p>Date: {dream.date}</p>
           <p>characters: {dream.characters}</p>
         </div>

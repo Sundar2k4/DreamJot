@@ -53,7 +53,7 @@ const authenticate = async (req, res, next) => {
 
 app.post('/adddream',authenticate, async (req, res) => {
     try {
-      const { date, type, dream, characters } = req.body;
+      const { date, type, dream, characters, scenario } = req.body;
   
       const newDream = new Dream({
         userId:req.user._id,
@@ -61,6 +61,7 @@ app.post('/adddream',authenticate, async (req, res) => {
         dream,
         type,
         characters,
+        scenario,
       });
   
       const savedDream = await newDream.save();

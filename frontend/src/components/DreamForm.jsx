@@ -8,13 +8,14 @@ const DreamForm = () => {
   const [date, setDate] = useState(today);
   const [type, setType] = useState("");
   const [characters, setCharacters] = useState("");
+  const [scenario, setScenario] = useState("");
   const [dream, setDream] = useState("");
 
   const handlesubmit = (e) => {
     e.preventDefault();
 
     const charactersarr = characters.split(",").map((c) => c.trim());
-    const data = { date, type, characters: charactersarr, dream };
+    const data = { date, type, characters: charactersarr, dream, scenario };
     const token = localStorage.getItem("token");
 
     fetch("http://localhost:5000/adddream", {
@@ -60,6 +61,15 @@ const DreamForm = () => {
           <textarea
             value={dream}
             onChange={(e) => setDream(e.target.value)}
+            required
+            rows="4"
+            className="w-full mt-1 mb-4 p-3 rounded-lg bg-white/20 text-white border border-white/30 
+          focus:outline-none focus:ring-2 focus:ring-white focus:bg-white/30"
+          />
+          <label className="text-white font-semibold">Scenario</label>
+          <textarea
+            value={scenario}
+            onChange={(e) => setScenario(e.target.value)}
             required
             rows="4"
             className="w-full mt-1 mb-4 p-3 rounded-lg bg-white/20 text-white border border-white/30 

@@ -6,6 +6,7 @@ const dreamSchema = new mongoose.Schema({
        dream:{type:String,required:true},
        type:{type:String,required:true},
        characters:{type:[String],required:true},
+       scenario:{type:String,required:true},
 });
 
 module.exports = mongoose.model("dream",dreamSchema);
