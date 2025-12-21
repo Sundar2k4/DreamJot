@@ -10,6 +10,36 @@ const DreamInfo = () => {
 
   console.log(id);
 
+  const handlepost = async () => {
+    if (!dream || !token) {
+      console.log("No dream or token available");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(dream),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Posted successfully:", result);
+        alert("Dream shared successfully!");
+      } else {
+        console.error("Post failed:", response.status);
+        alert("Failed to share dream");
+      }
+    } catch (error) {
+      console.error("Error posting dream:", error);
+      alert("Error sharing dream");
+    }
+  };
+
   const currdream = async () => {
     const res = await fetch(`http://localhost:5000/cdream/${id}`, {
       headers: {
@@ -62,6 +92,30 @@ const DreamInfo = () => {
                     <h3 className="text-white font-bold text-xl mb-6 text-center">
                       Dream Info
                     </h3>
+
+                    <div className="flex justify-center mb-6">
+                      <button
+                        onClick={handlepost}
+                        className="w-full max-w-md bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-gray-200 hover:scale-[1.02] transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
+                        disabled={!dream || !token}
+                      >
+                        Post Dream
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="size-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"
+                          />
+                        </svg>
+                      </button>
+                    </div>
 
                     <div className="space-y-4">
                       <div>

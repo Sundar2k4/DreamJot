@@ -3,6 +3,7 @@ const express = require('express');
 const Dream = require('./models/dream.js');
 const bcrypt = require('bcrypt');
 const Login = require('./models/login.js');
+const Pub = require('./models/publicdream.js');
 const cors = require('cors');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -185,6 +186,27 @@ app.post('/adddream',authenticate, async (req, res) => {
      }
   })
 
+  app.post("/post", authenticate, async (req, res) => {
+    try {
+      const dreamdata = req.body;
+  
+      const newpost = new Pub({
+        userId: req.user._id,  
+        date: dreamdata.date,
+        type: dreamdata.type,
+        dream: dreamdata.dream,
+        characters: dreamdata.characters,
+        scenario: dreamdata.scenario || "",
+      });
+  
+      const postdream = await newpost.save();
+      res.status(201).json(postdream);
+    } catch (err) {
+      console.error(err);
+      res.status(400).json({ error: err.message });
+    }
+  });
+  
 app.listen(port, () => {
     console.log("server connected on port " + port);
 });
