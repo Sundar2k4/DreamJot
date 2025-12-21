@@ -39,13 +39,13 @@ const Nav = () => {
                 }`
               }
             >
-              AddDream
+              Post
             </NavLink>
           </li>
 
           <li>
             <NavLink
-              to="/about"
+              to="/pub"
               className={({ isActive }) =>
                 `text-white text-lg font-medium px-4 py-2 rounded-md transition-all duration-200 ${
                   isActive
@@ -54,7 +54,7 @@ const Nav = () => {
                 }`
               }
             >
-              About
+              Explore
             </NavLink>
           </li>
 

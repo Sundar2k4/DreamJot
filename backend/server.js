@@ -191,7 +191,8 @@ app.post('/adddream',authenticate, async (req, res) => {
       const dreamdata = req.body;
   
       const newpost = new Pub({
-        userId: req.user._id,  
+        userId: req.user._id,
+        name:req.user.name,  
         date: dreamdata.date,
         type: dreamdata.type,
         dream: dreamdata.dream,
@@ -206,6 +207,19 @@ app.post('/adddream',authenticate, async (req, res) => {
       res.status(400).json({ error: err.message });
     }
   });
+
+  app.get("/getpub",authenticate,async (req,res)=>{
+     try
+     {
+
+       const val = await Pub.find();
+       return res.status(200).json(val);
+
+     }catch(err)
+     {
+        res.status(400).json(err);
+     }
+  })
   
 app.listen(port, () => {
     console.log("server connected on port " + port);
