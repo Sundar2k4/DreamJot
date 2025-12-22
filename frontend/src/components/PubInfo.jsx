@@ -7,7 +7,35 @@ const PubInfo = () => {
   const navigate = useNavigate();
   const [dream, setDream] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [like, setLike] = useState(0);
+  const [dislike, setDislike] = useState(0);
   const token = localStorage.getItem("token");
+
+  const sendLikes = async (newLike, newDislike) => {
+    await fetch(`http://localhost:5000/likes/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        like: newLike,
+        dislike: newDislike,
+      }),
+    });
+  };
+
+  const handleLike = () => {
+    const updatedLike = like + 1;
+    setLike(updatedLike);
+    sendLikes(updatedLike, dislike);
+  };
+
+  const handleDislike = () => {
+    const updatedDislike = dislike + 1;
+    setDislike(updatedDislike);
+    sendLikes(like, updatedDislike);
+  };
 
   useEffect(() => {
     if (!id || !token) {
@@ -50,12 +78,14 @@ const PubInfo = () => {
   }
 
   return (
-    <div className="">
+    <div>
       <Nav />
+
       <div className="min-h-screen bg-gradient-to-r from-black via-gray-800 to-white p-6">
         <h2 className="text-4xl font-bold text-white mb-12 text-center drop-shadow-lg">
           Dream Details
         </h2>
+
         <div className="max-w-2xl">
           <button
             onClick={() => navigate(-1)}
@@ -77,7 +107,23 @@ const PubInfo = () => {
             Back to Dreams
           </button>
 
-          <div className="p-8 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 shadow-2xl">
+          <div className="relative p-8 pt-16 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 shadow-2xl">
+            <div className="absolute top-4 right-4 flex gap-3">
+              <button
+                className="px-4 py-2 bg-white/20 rounded-full text-white hover:bg-white/30 transition"
+                onClick={handleLike}
+              >
+                👍 {like}
+              </button>
+
+              <button
+                className="px-4 py-2 bg-white/20 rounded-full text-white hover:bg-white/30 transition"
+                onClick={handleDislike}
+              >
+                👎 {dislike}
+              </button>
+            </div>
+
             <div className="text-white/90 mb-6 p-4 bg-white/10 rounded-xl">
               <span className="font-semibold text-lg">👤 Name:</span>
               <h3 className="text-2xl font-bold text-white ml-2">
@@ -99,6 +145,7 @@ const PubInfo = () => {
                   })}
                 </span>
               </div>
+
               <div className="p-4 bg-white/10 rounded-xl">
                 <span className="font-semibold text-white/90 block mb-1">
                   🏷️ Type:

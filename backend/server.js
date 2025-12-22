@@ -4,6 +4,7 @@ const Dream = require('./models/dream.js');
 const bcrypt = require('bcrypt');
 const Login = require('./models/login.js');
 const Pub = require('./models/publicdream.js');
+const Like = require('./models/like.js');
 const cors = require('cors');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -259,6 +260,28 @@ app.get("/getpubinfo/:id", authenticate, async (req, res) => {
   }
 });
 
+app.post("/likes/:id", authenticate, async (req, res) => {
+  const { id } = req.params;
+  const { like, dislike } = req.body;
+
+  try {
+    const data = await Like.findOneAndUpdate(
+      { userid: id },       
+      { $set: { like, dislike } }, 
+      {
+        upsert: true,        
+        new: true,         
+      }
+    );
+
+    return res.status(200).json({
+      message: "Like data saved",
+      data,
+    });
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+});
 
  
   
