@@ -247,6 +247,17 @@ app.post('/adddream',authenticate, async (req, res) => {
     }
   });
   
+app.get("/getpubinfo/:id", authenticate, async (req, res) => {
+  try {
+    const dream = await Pub.findById(req.params.id);
+    if (!dream) {
+      return res.status(404).json({ error: "Dream not found" });
+    }
+    res.json(dream);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
 
  

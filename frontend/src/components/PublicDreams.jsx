@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Nav from "./Nav";
+import { useNavigate } from "react-router-dom";
 
 const PublicDreams = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
 
@@ -63,7 +65,7 @@ const PublicDreams = () => {
     <div>
       <Nav />
       <div className="min-h-screen bg-gradient-to-r from-black via-gray-800 to-white p-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto hover:cursor-pointer">
           <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow">
             Dreams
           </h2>
@@ -74,6 +76,9 @@ const PublicDreams = () => {
                 <li
                   key={dream._id}
                   className="p-6 bg-white/20 rounded-xl border hover:bg-white/30 transition-all hover:scale-[1.02] shadow-lg border-white"
+                  onClick={() => {
+                    navigate(`/pubinfo/${dream._id}`);
+                  }}
                 >
                   <div className="flex justify-between items-center text-white font-semibold text-lg mb-2">
                     <span>{new Date(dream.date).toLocaleDateString()}</span>

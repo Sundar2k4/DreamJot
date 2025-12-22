@@ -11,6 +11,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import DreamInfo from "./components/DreamInfo";
 import PublicDreams from "./components/PublicDreams";
+import PubInfo from "./components/PubInfo";
 const App = () => {
   return (
     <Router>
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dinfo" element={<DreamInfo />} />
         <Route path="/pub" element={<PublicDreams />} />
+        <Route path="/pubinfo/:id" element={<PubInfo />} />
       </Routes>
     </Router>
   );
