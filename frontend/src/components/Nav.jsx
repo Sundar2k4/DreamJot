@@ -47,7 +47,7 @@ const Nav = () => {
             <NavLink
               to="/pub"
               className={({ isActive }) =>
-                `text-white text-lg font-medium px-4 py-2 rounded-md transition-all duration-200 ${
+                `text-black text-lg font-medium px-4 py-2 rounded-md transition-all duration-200 ${
                   isActive
                     ? "bg-white text-black shadow-md"
                     : "hover:bg-white hover:text-black"

@@ -53,9 +53,10 @@ const DreamInfo = () => {
       console.log("dream fetched successfully");
     }
   };
-
   useEffect(() => {
-    if (id) currdream();
+    if (id) {
+      currdream();
+    }
   }, [id]);
 
   return (
@@ -99,7 +100,7 @@ const DreamInfo = () => {
                         className="w-full max-w-md bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-gray-200 hover:scale-[1.02] transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
                         disabled={!dream || !token}
                       >
-                        Post Dream
+                        Post
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"

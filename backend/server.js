@@ -220,6 +220,38 @@ app.post('/adddream',authenticate, async (req, res) => {
         res.status(400).json(err);
      }
   })
+
+
+  app.post("/delpub/:id", authenticate, async (req, res) => {
+    try {
+      const id = req.params.id;
+      const userId = req.user._id;
+      
+
+      const dream = await Pub.findById(id);
+      
+      if (!dream) {
+        return res.status(404).json({ error: "Dream not found" });
+      }
+    
+      if (dream.userId.toString() !== userId.toString()) {
+        return res.status(403).json({ error: "Not authorized to delete this dream" });
+      }
+
+      const deleted = await Pub.findByIdAndDelete(id);
+      res.status(200).json({ message: "Dream deleted successfully" });
+      
+    } catch (err) {
+      console.error(err);
+      res.status(400).json({ error: err.message });
+    }
+  });
+  
+
+
+ 
+  
+  
   
 app.listen(port, () => {
     console.log("server connected on port " + port);
