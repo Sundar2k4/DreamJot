@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const Login = require('./models/login.js');
 const Pub = require('./models/publicdream.js');
 const Like = require('./models/like.js');
+const Comment = require('./models/comment.js');
 const cors = require('cors');
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -302,6 +303,25 @@ app.get("/getlikes/:id", authenticate, async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 });
+
+app.post("/pushcomments",authenticate,async (req,res)=>{
+  try{
+    
+    const {dreamId,name,content} = req.body;
+    const newcomment = new Comment({
+        dreamId,
+        name,
+        content,
+    });
+
+    const savecomment = await newcomment.save();
+    return res.status(200).json(savecomment);
+
+  }catch(err)
+  {
+    return res.status(400).json(err);
+  }
+})
 
   
   

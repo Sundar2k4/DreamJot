@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Comment from "./Comment";
 import Nav from "./Nav";
 
 const PubInfo = () => {
@@ -129,7 +130,6 @@ const PubInfo = () => {
             </svg>
             Back to Dreams
           </button>
-
           <div className="relative p-8 pt-16 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 shadow-2xl">
             <div className="absolute top-4 right-4 flex gap-3">
               <button
@@ -218,6 +218,7 @@ const PubInfo = () => {
             )}
           </div>
         </div>
+        <Comment dreamId={id} />
       </div>
     </div>
   );
