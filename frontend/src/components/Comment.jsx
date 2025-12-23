@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 const Comment = ({ dreamId }) => {
   const token = localStorage.getItem("token");
   const [content, setContent] = useState("");
+  const [commentdata, setCommentdata] = useState([]);
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -15,6 +16,29 @@ const Comment = ({ dreamId }) => {
       .then((data) => setName(data.name))
       .catch(console.error);
   }, [token]);
+
+  useEffect(() => {
+    if (!dreamId || !token) return;
+
+    fetch(`http://localhost:5000/getcomment/${dreamId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch comments");
+        }
+        return res.json();
+      })
+      .then((commentdata) => {
+        setCommentdata(commentdata);
+        console.log("Successfully got comments");
+      })
+      .catch((err) => console.error(err));
+  }, [dreamId, token]);
 
   const handleSend = async () => {
     if (!content.trim()) return;
@@ -49,14 +73,14 @@ const Comment = ({ dreamId }) => {
         <button
           type="button"
           onClick={handleSend}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition hover:cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
-            stroke="currentColor"
+            stroke="black"
             className="w-6 h-6"
           >
             <path
@@ -66,6 +90,21 @@ const Comment = ({ dreamId }) => {
             />
           </svg>
         </button>
+      </div>
+      <div className="mt-6 space-y-4">
+        {commentdata.length > 0 ? (
+          commentdata.map((comment, index) => (
+            <div
+              key={index}
+              className="p-4 bg-white/10 rounded-xl border border-white/20"
+            >
+              <p className="text-white font-semibold">{comment.name}</p>
+              <p className="text-white/80 mt-1">{comment.content}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-white/50 text-sm">No comments yet</p>
+        )}
       </div>
     </div>
   );

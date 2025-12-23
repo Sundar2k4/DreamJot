@@ -323,6 +323,18 @@ app.post("/pushcomments",authenticate,async (req,res)=>{
   }
 })
 
+app.get("/getcomment/:id", authenticate, async (req, res) => {
+  try {
+    const dreamId = req.params.id;
+
+    const comments = await Comment.find({ dreamId }).sort({ createdAt: -1 });
+
+    return res.status(200).json(comments);
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+});
+
   
   
   
