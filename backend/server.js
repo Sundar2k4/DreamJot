@@ -261,16 +261,16 @@ app.get("/getpubinfo/:id", authenticate, async (req, res) => {
 });
 
 app.post("/likes/:id", authenticate, async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; 
   const { like, dislike } = req.body;
 
   try {
     const data = await Like.findOneAndUpdate(
-      { userid: id },       
-      { $set: { like, dislike } }, 
+      { dreamId: id },               
+      { $set: { like, dislike } },
       {
-        upsert: true,        
-        new: true,         
+        upsert: true,
+        new: true,
       }
     );
 
@@ -283,7 +283,26 @@ app.post("/likes/:id", authenticate, async (req, res) => {
   }
 });
 
+
+app.get("/getlikes/:id", authenticate, async (req, res) => {
+  try {
+    const glike = await Like.findOne({ dreamId: req.params.id });
+    
+    if (!glike) {
+      return res.json({ like: 0, dislike: 0 });
+    }
+
  
+    return res.status(200).json({
+      like: glike.like || 0,
+      dislike: glike.dislike || 0
+    });
+  } catch (err) {
+
+    return res.status(500).json({ error: err.message });
+  }
+});
+
   
   
   

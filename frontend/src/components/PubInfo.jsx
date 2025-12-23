@@ -25,6 +25,29 @@ const PubInfo = () => {
     });
   };
 
+  const fetchlikes = async () => {
+    const res = await fetch(`http://localhost:5000/getlikes/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setLike(data.like);
+      setDislike(data.dislike);
+    }
+  };
+
+  useEffect(() => {
+    if (id && token) {
+      fetchlikes();
+    }
+  }, [id, token]);
+
   const handleLike = () => {
     const updatedLike = like + 1;
     setLike(updatedLike);
