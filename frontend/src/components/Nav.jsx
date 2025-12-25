@@ -60,7 +60,7 @@ const Nav = () => {
 
           <li>
             <NavLink
-              to="/contact"
+              to="/communities"
               className={({ isActive }) =>
                 `text-white text-lg font-medium px-4 py-2 rounded-md transition-all duration-200 ${
                   isActive
@@ -69,7 +69,7 @@ const Nav = () => {
                 }`
               }
             >
-              Contact
+              Community
             </NavLink>
           </li>
 

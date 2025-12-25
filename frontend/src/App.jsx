@@ -13,7 +13,7 @@ import DreamInfo from "./components/DreamInfo";
 import PublicDreams from "./components/PublicDreams";
 import PubInfo from "./components/PubInfo";
 import Comment from "./components/Comment";
-import Community from "../../backend/models/community";
+import Community from "./components/Community";
 const App = () => {
   return (
     <Router>
