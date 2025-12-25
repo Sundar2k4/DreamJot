@@ -13,6 +13,7 @@ import DreamInfo from "./components/DreamInfo";
 import PublicDreams from "./components/PublicDreams";
 import PubInfo from "./components/PubInfo";
 import Comment from "./components/Comment";
+import Community from "../../backend/models/community";
 const App = () => {
   return (
     <Router>
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/pub" element={<PublicDreams />} />
         <Route path="/pubinfo/:id" element={<PubInfo />} />
         <Route path="/comment" element={<Comment />} />
+        <Route path="/communities" element={<Community />} />
       </Routes>
     </Router>
   );
